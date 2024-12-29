@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('nombre_place');
             $table->string('type_vol');
             $table->string('statut');
-            $table->string('avion');
             $table->double('prix');
 
         });

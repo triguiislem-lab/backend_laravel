@@ -25,6 +25,7 @@ class VolController extends Controller
      */
     public function store(Request $request)
     {
+        
         try {
             $vol=new vol([
             'numero_vol'=>$request->input('numero_vol'),
@@ -33,15 +34,18 @@ class VolController extends Controller
             'date_depart'=>$request->input('date_depart'),
             'date_arrivee'=>$request->input('date_arrivee'),
             'nombre_place'=>$request->input('nombre_place'),
+            'type_vol'=>$request->input('type_vol'),
+            'statut'=>$request->input('statut'),
             'prix'=>$request->input('prix'),
             ]);
+        
             $vol->save();
             
             
             return response()->json($vol);
             
             } catch (\Exception $e) {
-            return response()->json("insertion impossible");
+            return response()->json($e);
             }
     }
 
