@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            #$table->timestamps();
             $table->integer('nombre_place_reservé');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('vol_id')->constrained()->onDelete('cascade');
-            
+
 
         });
     }
