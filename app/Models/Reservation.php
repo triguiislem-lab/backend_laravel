@@ -26,5 +26,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(Vol::class , 'vol_id'); 
     }
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
 }
 

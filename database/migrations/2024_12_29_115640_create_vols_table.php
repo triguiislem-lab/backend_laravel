@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('ville_arrivee');
             $table->dateTime('date_depart');
             $table->dateTime('date_arrivee');
-            $table->integer('nombre_place');
+            $table->integer('nombre_place_total');
             $table->string('type_vol');
             $table->string('statut');
             $table->double('prix');

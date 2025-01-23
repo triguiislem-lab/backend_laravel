@@ -13,14 +13,24 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): Response
+    public function store(LoginRequest $request): \Illuminate\Http\JsonResponse
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        return response()->noContent();
+        try {
+            $request->authenticate();
+            $request->session()->regenerate();
+    
+            return response()->json([
+                'message' => 'Connexion réussie',
+                'user' => Auth::user(),
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erreur lors de la tentative de connexion',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+    
 
     /**
      * Destroy an authenticated session.

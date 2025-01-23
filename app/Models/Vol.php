@@ -27,4 +27,8 @@ protected $fillable = [
     {
         return $this->hasMany(Reservation::class);
     } 
+    public function classeVols(): HasMany
+    {
+        return $this->hasMany(ClasseVol::class);
+    }
 }
