@@ -48,7 +48,38 @@ Route::middleware('api')->group(function () {
 
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
-Route::middleware(['web'])->group(function () {
-    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
+#Route::middleware(['web'])->group(function () {
+    #Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+   # Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
+#});
+
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+Route::post('login', function (Request $request) {
+    // Validation des données d'entrée
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
+
+    // Chercher l'utilisateur avec l'email
+    $user = User::where('email', $request->email)->first();
+
+    // Vérifier les identifiants
+    if ($user && Hash::check($request->password, $user->password)) {
+        // Générer un token pour l'utilisateur
+        $token = $user->createToken('YourAppName')->plainTextToken;
+
+        // Retourner le token dans la réponse
+        return response()->json([
+            'token' => $token
+        ]);
+    }
+
+    // Si les identifiants sont incorrects
+    return response()->json(['message' => 'Invalid credentials'], 401);
+});
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
 });

@@ -33,7 +33,7 @@ class VolController extends Controller
             'ville_arrivee'=>$request->input('ville_arrivee'),
             'date_depart'=>$request->input('date_depart'),
             'date_arrivee'=>$request->input('date_arrivee'),
-            'nombre_place'=>$request->input('nombre_place'),
+            'nombre_place_total'=>$request->input('nombre_place_total'),
             'type_vol'=>$request->input('type_vol'),
             'statut'=>$request->input('statut'),
             'prix'=>$request->input('prix'),

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -18,6 +19,8 @@ class AuthenticatedSessionController extends Controller
         try {
             $request->authenticate();
             $request->session()->regenerate();
+            $user = Auth::user();
+          #  $token = $user->createToken('auth_token')->plainTextToken;
     
             return response()->json([
                 'message' => 'Connexion réussie',

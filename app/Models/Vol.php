@@ -15,7 +15,7 @@ protected $fillable = [
     'ville_arrivee',
     'date_depart',
     'date_arrivee',
-    'nombre_place',
+    'nombre_place_total',
     'prix',
     'type_vol',
     'statut'
