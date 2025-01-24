@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vol;
 use Illuminate\Http\Request;
+use http\Params;
 
 class VolController extends Controller
 {
@@ -16,7 +17,9 @@ class VolController extends Controller
             $vols = vol::all();
             return response()->json($vols);
         } catch (\Exception $e) {
-            return response()->json("probleme de récupération de la liste des vols");
+            return response()->json(
+                "probleme de récupération de la liste des vols"
+            );
         }
     }
 
@@ -25,25 +28,22 @@ class VolController extends Controller
      */
     public function store(Request $request)
     {
-
         try {
             $vol = new vol([
-                'numero_vol' => $request->input('numero_vol'),
-                'ville_depart' => $request->input('ville_depart'),
-                'ville_arrivee' => $request->input('ville_arrivee'),
-                'date_depart' => $request->input('date_depart'),
-                'date_arrivee' => $request->input('date_arrivee'),
-                'nombre_place_total' => $request->input('nombre_place_total'),
-                'type_vol' => $request->input('type_vol'),
-                'statut' => $request->input('statut'),
-                'prix' => $request->input('prix'),
+                "numero_vol" => $request->input("numero_vol"),
+                "ville_depart" => $request->input("ville_depart"),
+                "ville_arrivee" => $request->input("ville_arrivee"),
+                "date_depart" => $request->input("date_depart"),
+                "date_arrivee" => $request->input("date_arrivee"),
+                "nombre_place_total" => $request->input("nombre_place_total"),
+                "type_vol" => $request->input("type_vol"),
+                "statut" => $request->input("statut"),
+                "prix" => $request->input("prix"),
             ]);
 
             $vol->save();
 
-
             return response()->json($vol);
-
         } catch (\Exception $e) {
             return response()->json($e);
         }
@@ -87,6 +87,36 @@ class VolController extends Controller
             return response()->json("vol supprimée avec succes");
         } catch (\Exception $e) {
             return response()->json("probleme de suppression de vol");
+        }
+    }
+
+    public function searchVol(Request $request)
+    {
+        try {
+            $vols = Vol::where(
+                "ville_depart",
+                "like",
+                "%" . $request->route("location_depart") . "%"
+            )
+                ->where(
+                    "ville_arrivee",
+                    "like",
+                    "%" . $request->route("location_destination") . "%"
+                )
+                ->where(
+                    "date_depart",
+                    "like",
+                    "%" . $request->route("date_depart") . "%"
+                )
+                ->where(
+                    "date_arrivee",
+                    "like",
+                    "%" . $request->route("date_arrivee") . "%"
+                )
+                ->get();
+            return response()->json($vols);
+        } catch (\Exception $e) {
+            return response()->json("probleme de recherche de vol");
         }
     }
 }

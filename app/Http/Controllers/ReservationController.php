@@ -32,10 +32,10 @@ class ReservationController extends Controller
                 'user_id' => $request->input('user_id'),
                 'vol_id' => $request->input('vol_id'),
             ]);
-    
+
             // Sauvegarder la réservation
             $reservation->save();
-    
+
             // Retourner la réservation nouvellement créée
             return response()->json([
                 'message' => 'Réservation créée avec succès',
@@ -49,7 +49,7 @@ class ReservationController extends Controller
             ], 500);
         }
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -72,10 +72,10 @@ class ReservationController extends Controller
         try {
             // Récupérer la réservation avec l'ID passé dans la requête
             $reservation = Reservation::findOrFail($id);
-    
+
             // Mettre à jour la réservation avec toutes les données de la requête
             $reservation->update($request->all());
-    
+
             // Retourner la réponse avec la réservation mise à jour
             return response()->json($reservation);
         } catch (\Exception $e) {
@@ -83,7 +83,7 @@ class ReservationController extends Controller
             return response()->json($e);
         }
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -93,10 +93,10 @@ class ReservationController extends Controller
         try {
             // Récupérer la réservation avec l'ID passé dans la requête
             $reservation = Reservation::findOrFail($id);
-    
+
             // Supprimer la réservation
             $reservation->delete();
-    
+
             // Retourner une réponse indiquant que la suppression a été réussie
             return response()->json("Réservation supprimée avec succès");
         } catch (\Exception $e) {
@@ -104,5 +104,5 @@ class ReservationController extends Controller
             return response()->json("Suppression impossible: {$e->getMessage()}", 500);
         }
     }
-    
+
 }
