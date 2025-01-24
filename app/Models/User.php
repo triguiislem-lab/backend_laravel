@@ -8,12 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 { use HasApiTokens;
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-   
+
 
     /**
      * The attributes that are mass assignable.
@@ -52,5 +53,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Reservation::class
     );
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey(); // Returns the user's unique identifier (e.g., id).
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return []; // Add custom claims (optional data) to the token.
     }
 }

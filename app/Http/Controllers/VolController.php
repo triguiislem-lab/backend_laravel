@@ -13,11 +13,11 @@ class VolController extends Controller
     public function index()
     {
         try {
-            $vols=vol::all();
+            $vols = vol::all();
             return response()->json($vols);
-            } catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json("probleme de récupération de la liste des vols");
-            }
+        }
     }
 
     /**
@@ -25,28 +25,28 @@ class VolController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         try {
-            $vol=new vol([
-            'numero_vol'=>$request->input('numero_vol'),
-            'ville_depart'=>$request->input('ville_depart'),
-            'ville_arrivee'=>$request->input('ville_arrivee'),
-            'date_depart'=>$request->input('date_depart'),
-            'date_arrivee'=>$request->input('date_arrivee'),
-            'nombre_place_total'=>$request->input('nombre_place_total'),
-            'type_vol'=>$request->input('type_vol'),
-            'statut'=>$request->input('statut'),
-            'prix'=>$request->input('prix'),
+            $vol = new vol([
+                'numero_vol' => $request->input('numero_vol'),
+                'ville_depart' => $request->input('ville_depart'),
+                'ville_arrivee' => $request->input('ville_arrivee'),
+                'date_depart' => $request->input('date_depart'),
+                'date_arrivee' => $request->input('date_arrivee'),
+                'nombre_place_total' => $request->input('nombre_place_total'),
+                'type_vol' => $request->input('type_vol'),
+                'statut' => $request->input('statut'),
+                'prix' => $request->input('prix'),
             ]);
-        
+
             $vol->save();
-            
-            
+
+
             return response()->json($vol);
-            
-            } catch (\Exception $e) {
+
+        } catch (\Exception $e) {
             return response()->json($e);
-            }
+        }
     }
 
     /**
@@ -55,38 +55,38 @@ class VolController extends Controller
     public function show($id)
     {
         try {
-            $vol=Vol::findOrFail($id);
+            $vol = Vol::findOrFail($id);
             return response()->json($vol);
-            } catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json("probleme de récupération des données");
-            }
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  $id)
+    public function update(Request $request, $id)
     {
         try {
-            $vol=Vol::findorFail($id);
+            $vol = Vol::findorFail($id);
             $vol->update($request->all());
             return response()->json($vol);
-            } catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json("probleme de modification");
-            }
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         try {
-            $vol=Vol::findOrFail($id);
+            $vol = Vol::findOrFail($id);
             $vol->delete();
             return response()->json("vol supprimée avec succes");
-            } catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json("probleme de suppression de vol");
-            }
+        }
     }
 }
